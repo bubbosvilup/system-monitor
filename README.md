@@ -1,58 +1,69 @@
-# System Monitor
+System Monitor
+System Monitor is a C++ application built with SDL3 and SDL_ttf to monitor CPU, RAM, and network usage in real-time through a minimalist graphical interface.
 
-System Monitor è un'applicazione sviluppata in C++ utilizzando **SDL3** e **SDL_ttf** per visualizzare in tempo reale l'utilizzo di CPU e RAM, con un'interfaccia grafica minimale.
+🌈 Recent Changes
 
-## 🌈** Cambiamenti**
+05/02/25
 
-✅ Il file Arial.ttf è ora incluso nel progetto, quindi non è più necessario scaricarlo manualmente.
-✅ i dlls sono ora incluso nel progetto, quindi non è più necessario scaricarli manualmente.
+✅ The Arial.ttf file is now included in the project, so there's no need to download it manually.
+✅ The .dll files are now included, eliminating the need to download them separately.
+✅ The project structure has been reorganized:
+Source code is now located in src/
+Header files are stored in include/
+✅ Added the Network monitoring feature
+✅ Various BugFixing
 
-## **📌 Funzionalità**
+📋 To-Do List
+[X] Improve UI design to enhance readability
+[X] Display CPU & RAM usage percentage
+[X] Show network upload & download speed
+[ ] Add detailed CPU, GPU, and OS information
+[ ] Improve error handling and exception management
+[ ] Make the code more modular for better maintainability
+[ ] Refractoring, complex stuff simplified
+[ ] Better UI, bg etc..
+[ ] More functionality?
 
-✅ Monitoraggio in tempo reale di CPU e RAM
-✅ Visualizzazione delle informazioni su un'interfaccia grafica
-✅ Grafici animati con barre colorate
-✅ Mostra la quantità di RAM totale e utilizzata
-✅ **TODO:** Aggiungere il rilevamento di CPU, GPU e sistema operativo
+---
 
-## **🛠️ Installazione**
+📌 Features
 
-### **1️⃣ Dipendenze necessarie**
+- Real-time monitoring of CPU, RAM, and network usage
+- Graphical interface for better data visualization
+- Animated color-coded bars for CPU and RAM usage
+- Displays CPU and RAM percentage values next to the bars
+- Shows upload and download speed in KB/s
 
-- MinGW (GCC/G++)
+🛠️ Installation
+1️⃣ Required Dependencies
+MinGW (GCC/G++)
+SDL3
+SDL_ttf
+2️⃣ Compilation
+Run the following command in the project folder:
 
-### **2️⃣ Compilazione**
-
-Esegui il seguente comando per compilare il progetto:
-
-```sh
-g++ main.cpp -o system_monitor.exe \
+sh
+Copia
+Modifica
+g++ -o system_monitor.exe src/main.cpp src/NetworkMonitor.cpp src/SystemMonitor.cpp src/UIRenderer.cpp \
+-I include \
 -I C:/SDL3-3.2.2/x86_64-w64-mingw32/include \
 -I C:/SDL3_ttf-3.1.0/x86_64-w64-mingw32/include \
 -L C:/SDL3-3.2.2/x86_64-w64-mingw32/lib \
 -L C:/SDL3_ttf-3.1.0/x86_64-w64-mingw32/lib \
--lmingw32 -lSDL3 -lSDL3_ttf
-```
+-lmingw32 -lSDL3 -lSDL3_ttf -liphlpapi
+3️⃣ Run the Application
+Make sure the SDL3.dll and SDL3_ttf.dll files are in the same folder as the executable, then run:
 
-### **3️⃣ Esecuzione**
-
-Assicurati di avere le librerie SDL3.dll e SDL3_ttf.dll nella stessa cartella dell'eseguibile, poi esegui:
-
-```sh
+sh
+Copia
+Modifica
 ./system_monitor.exe
-```
+📤 Contributing
+If you want to contribute, feel free to clone the repository and open a Pull Request on GitHub:
 
-## **📌 TODO: Prossimi miglioramenti**
-
-✅ **Migliorare l'interfaccia utente** per distinguere meglio CPU e RAM
-✅ **Recuperare informazioni su CPU, GPU e Sistema Operativo**
-✅ **Rendere il codice più modulare** per evitare funzioni troppo complesse
-✅ **Gestire meglio le eccezioni e gli errori** in fase di esecuzione
-
-## **📤 Contribuire**
-
-Se vuoi contribuire, puoi clonare il repository e aprire una Pull Request su GitHub:
-
-```sh
+sh
+Copia
+Modifica
 git clone https://github.com/bubbosvilup/system-monitor.git
-```
+🚀 All contributions are welcome!
