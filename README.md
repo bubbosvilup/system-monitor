@@ -67,3 +67,5 @@ Copia
 Modifica
 git clone https://github.com/bubbosvilup/system-monitor.git
 🚀 All contributions are welcome!
+
+--*--send help :(--*--
