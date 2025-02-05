@@ -2,6 +2,10 @@
 
 System Monitor è un'applicazione sviluppata in C++ utilizzando **SDL3** e **SDL_ttf** per visualizzare in tempo reale l'utilizzo di CPU e RAM, con un'interfaccia grafica minimale.
 
+## 🌈** Cambiamenti**
+
+✅ Il file Arial.ttf è ora incluso nel progetto, quindi non è più necessario scaricarlo manualmente.
+
 ## **📌 Funzionalità**
 
 ✅ Monitoraggio in tempo reale di CPU e RAM
@@ -16,7 +20,6 @@ System Monitor è un'applicazione sviluppata in C++ utilizzando **SDL3** e **SDL
 
 - MinGW (GCC/G++)
 - SDL3 e SDL_ttf
-- Arial.ttf (font per il rendering del testo)
 
 ### **2️⃣ Compilazione**
 
