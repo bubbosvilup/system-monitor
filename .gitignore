@@ -6,4 +6,4 @@
 
 # Escludi le configurazioni di VS Code
 .vscode/
-*.json
+*.jsongit a
