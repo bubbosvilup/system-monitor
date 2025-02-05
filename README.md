@@ -5,6 +5,7 @@ System Monitor è un'applicazione sviluppata in C++ utilizzando **SDL3** e **SDL
 ## 🌈** Cambiamenti**
 
 ✅ Il file Arial.ttf è ora incluso nel progetto, quindi non è più necessario scaricarlo manualmente.
+✅ i dlls sono ora incluso nel progetto, quindi non è più necessario scaricarli manualmente.
 
 ## **📌 Funzionalità**
 
@@ -19,7 +20,6 @@ System Monitor è un'applicazione sviluppata in C++ utilizzando **SDL3** e **SDL
 ### **1️⃣ Dipendenze necessarie**
 
 - MinGW (GCC/G++)
-- SDL3 e SDL_ttf
 
 ### **2️⃣ Compilazione**
 
