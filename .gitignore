@@ -1,0 +1,16 @@
+# Escludi file compilati ed eseguibili
+*.exe
+*.dll
+*.o
+*.obj
+
+# Escludi font e risorse locali
+Arial.ttf
+
+# Escludi le configurazioni di VS Code
+.vscode/
+*.json
+
+# Escludi librerie SDL che possono essere reinstallate
+SDL3.dll
+SDL3_ttf.dll
