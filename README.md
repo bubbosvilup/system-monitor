@@ -43,6 +43,8 @@ g++ -o system_monitor.exe src/main.cpp src/NetworkMonitor.cpp src/SystemMonitor.
 -L C:/SDL3-3.2.2/x86_64-w64-mingw32/lib \
 -L C:/SDL3_ttf-3.1.0/x86_64-w64-mingw32/lib \
 -lmingw32 -lSDL3 -lSDL3_ttf -liphlpapi
+```sh
+
 🏃‍♂️ Run the Application
 Make sure the SDL3.dll and SDL3_ttf.dll files are in the same folder as the executable, then run:
 
@@ -62,7 +64,7 @@ If you want to contribute, feel free to clone the repository and open a Pull Req
 - **Code Blocks (` ```sh `)** are correctly formatted for shell commands.
 
 After modifying, commit and push it back:
-```sh
+
 git add README.md
 git commit -m "Fixed Markdown formatting for lists and code blocks"
 git push origin main
