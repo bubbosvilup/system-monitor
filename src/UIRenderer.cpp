@@ -1,20 +1,21 @@
-#include <SDL_ttf.h>
 #include "UIRenderer.h"
 #include <iostream>
 #include <string>
 #include <cstdio>
-
 
 UIRenderer::UIRenderer(SDL_Window* window) {
     renderer = SDL_CreateRenderer(window, nullptr);
     font = TTF_OpenFont("arial.ttf", 18);
     boldFont = TTF_OpenFont("arialbd.ttf", 22);
 
+    // Initialize theme button position and size
+    themeButtonRect = {20, 240, 120, 40};
+
     if (!renderer) {
-        std::cerr << "Errore nella creazione del renderer: " << SDL_GetError() << std::endl;
+        std::cerr << "Renderer creation error: " << SDL_GetError() << std::endl;
     }
     if (!font || !boldFont) {
-        std::cerr << "Errore nel caricamento dei font: " << SDL_GetError() << std::endl;
+        std::cerr << "Font loading error: " << SDL_GetError() << std::endl;
     }
 }
 
@@ -30,11 +31,36 @@ UIRenderer::~UIRenderer() {
     }
 }
 
+void UIRenderer::toggleTheme() {
+    isDarkTheme = !isDarkTheme;
+}
+
+bool UIRenderer::handleEvent(const SDL_Event& event) {
+    if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN) {
+        float mouseX = event.button.x;
+        float mouseY = event.button.y;
+        
+        if (mouseX >= themeButtonRect.x && mouseX <= themeButtonRect.x + themeButtonRect.w &&
+            mouseY >= themeButtonRect.y && mouseY <= themeButtonRect.y + themeButtonRect.h) {
+            toggleTheme();
+            return true;
+        }
+    }
+    return false;
+}
+
 void UIRenderer::render(const SystemInfo& info) {
-    SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
+    Theme& currentTheme = isDarkTheme ? darkTheme : lightTheme;
+    
+    // Set background color
+    SDL_SetRenderDrawColor(renderer, 
+        currentTheme.background.r, 
+        currentTheme.background.g, 
+        currentTheme.background.b, 
+        currentTheme.background.a);
     SDL_RenderClear(renderer);
 
-    // Aggiorna storico
+    // Update history
     history.cpu.push_back(info.cpuUsage);
     history.ram.push_back(info.ramUsage);
     history.upload.push_back(info.networkUpload);
@@ -45,33 +71,58 @@ void UIRenderer::render(const SystemInfo& info) {
     if (history.upload.size() > 300) history.upload.pop_front();
     if (history.download.size() > 300) history.download.pop_front();
 
-    // Colori
-    SDL_Color whiteColor = {255, 255, 255, 255};
-    SDL_Color cpuColor = {76, 175, 80, 255};  // Verde
-    SDL_Color ramColor = {33, 150, 243, 255}; // Blu
-
-    // 🖊 Aggiungiamo la percentuale accanto al nome
+    // Render CPU section
     char cpuLabel[32];
     snprintf(cpuLabel, sizeof(cpuLabel), "CPU Usage: %.1f%%", info.cpuUsage);
-    renderText(cpuLabel, 20, 20, boldFont, whiteColor);
-    renderBar(info.cpuUsage, 20, 50, 200, 30, cpuColor);
+    renderText(cpuLabel, 20, 20, boldFont, currentTheme.text);
+    renderBar(info.cpuUsage, 20, 50, 200, 30, currentTheme.cpu, currentTheme.background);
 
+    // Render RAM section
     char ramLabel[32];
     snprintf(ramLabel, sizeof(ramLabel), "RAM Usage: %.1f%%", info.ramUsage);
-    renderText(ramLabel, 20, 100, boldFont, whiteColor);
-    renderBar(info.ramUsage, 20, 130, 200, 30, ramColor);
+    renderText(ramLabel, 20, 100, boldFont, currentTheme.text);
+    renderBar(info.ramUsage, 20, 130, 200, 30, currentTheme.ram, currentTheme.background);
 
-    // 📊 Miglioriamo la visualizzazione dell'upload/download
+    // Render network section
     char netText[64];
-    snprintf(netText, sizeof(netText), "Network Traffic: Upload: %.2f KB/s Download: %.2f KB/s",
-             info.networkUpload, info.networkDownload);
-    renderText(netText, 20, 180, font, whiteColor);
+    snprintf(netText, sizeof(netText), "Network Traffic:");
+    renderText(netText, 20, 180, boldFont, currentTheme.text);
+    
+    char uploadText[32], downloadText[32];
+    snprintf(uploadText, sizeof(uploadText), "Upload: %.2f KB/s", info.networkUpload);
+    snprintf(downloadText, sizeof(downloadText), "   Download: %.2f KB/s", info.networkDownload);
+    renderText(uploadText, 40, 210, font, currentTheme.upload);
+    renderText(downloadText, 200, 210, font, currentTheme.download);
+
+    // Render theme toggle button
+    SDL_SetRenderDrawColor(renderer, 
+        currentTheme.buttonBg.r, 
+        currentTheme.buttonBg.g, 
+        currentTheme.buttonBg.b, 
+        currentTheme.buttonBg.a);
+    SDL_RenderFillRect(renderer, &themeButtonRect);
+    
+    std::string themeText = isDarkTheme ? "Light Mode" : "Dark Mode";
+    renderText(themeText, 
+        themeButtonRect.x + 10, 
+        themeButtonRect.y + 10, 
+        font, 
+        currentTheme.buttonText);
 
     SDL_RenderPresent(renderer);
 }
 
+void UIRenderer::renderBar(float value, int x, int y, int width, int height, SDL_Color color, SDL_Color bgColor) {
+    // Draw background
+    SDL_SetRenderDrawColor(renderer, 
+        bgColor.r * 0.8, 
+        bgColor.g * 0.8, 
+        bgColor.b * 0.8, 
+        bgColor.a);
+    SDL_FRect bgRect = {static_cast<float>(x), static_cast<float>(y), static_cast<float>(width), static_cast<float>(height)};
+    SDL_RenderFillRect(renderer, &bgRect);
 
-void UIRenderer::renderBar(float value, int x, int y, int width, int height, SDL_Color color) {
+    // Draw value bar
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_FRect barRect = {static_cast<float>(x), static_cast<float>(y), width * (value / 100.0f), static_cast<float>(height)};
     SDL_RenderFillRect(renderer, &barRect);
@@ -80,12 +131,12 @@ void UIRenderer::renderBar(float value, int x, int y, int width, int height, SDL
 void UIRenderer::renderText(const std::string& text, int x, int y, TTF_Font* font, SDL_Color color) {
     SDL_Surface* surface = TTF_RenderText_Blended(font, text.c_str(), text.length(), color);
     if (!surface) {
-        std::cerr << "Errore nella creazione della superficie testo: " << SDL_GetError() << std::endl;
+        std::cerr << "Text surface creation error: " << SDL_GetError() << std::endl;
         return;
     }
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
     if (!texture) {
-        std::cerr << "Errore nella creazione della texture testo: " << SDL_GetError() << std::endl;
+        std::cerr << "Text texture creation error: " << SDL_GetError() << std::endl;
         SDL_DestroySurface(surface);
         return;
     }
@@ -96,4 +147,3 @@ void UIRenderer::renderText(const std::string& text, int x, int y, TTF_Font* fon
     SDL_DestroySurface(surface);
     SDL_DestroyTexture(texture);
 }
-
