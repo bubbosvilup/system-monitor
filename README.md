@@ -47,9 +47,7 @@ SDL_ttf
 2️⃣ Compilation
 Run the following command in the project folder:
 
-sh
-Copia
-Modifica
+
 g++ -o system_monitor.exe src/main.cpp src/NetworkMonitor.cpp src/SystemMonitor.cpp src/UIRenderer.cpp \
 -I include \
 -I C:/SDL3-3.2.2/x86_64-w64-mingw32/include \
@@ -60,16 +58,11 @@ g++ -o system_monitor.exe src/main.cpp src/NetworkMonitor.cpp src/SystemMonitor.
 3️⃣ Run the Application
 Make sure the SDL3.dll and SDL3_ttf.dll files are in the same folder as the executable, then run:
 
-sh
-Copia
-Modifica
-./system_monitor.exe
+
 📤 Contributing
 If you want to contribute, feel free to clone the repository and open a Pull Request on GitHub:
 
-sh
-Copia
-Modifica
+
 git clone https://github.com/bubbosvilup/system-monitor.git
 🚀 All contributions are welcome!
 
