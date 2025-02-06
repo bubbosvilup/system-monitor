@@ -48,8 +48,10 @@ g++ -o system_monitor.exe src/main.cpp src/NetworkMonitor.cpp src/SystemMonitor.
 
 🏃‍♂️ Run the Application
 Make sure the SDL3.dll and SDL3_ttf.dll files are in the same folder as the executable, then run:
-
+```sh
 ./system_monitor.exe
+```
+
 🤝 Contributing
 If you want to contribute, feel free to clone the repository and open a Pull Request on GitHub: GitHub Repository
 
