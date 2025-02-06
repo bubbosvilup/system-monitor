@@ -35,6 +35,7 @@
 
 ### 🚀 Compilation
 Run the following command in the project folder:
+
 ```sh
 g++ -o system_monitor.exe src/main.cpp src/NetworkMonitor.cpp src/SystemMonitor.cpp src/UIRenderer.cpp \
 -I include \
@@ -43,7 +44,7 @@ g++ -o system_monitor.exe src/main.cpp src/NetworkMonitor.cpp src/SystemMonitor.
 -L C:/SDL3-3.2.2/x86_64-w64-mingw32/lib \
 -L C:/SDL3_ttf-3.1.0/x86_64-w64-mingw32/lib \
 -lmingw32 -lSDL3 -lSDL3_ttf -liphlpapi
-```sh
+```
 
 🏃‍♂️ Run the Application
 Make sure the SDL3.dll and SDL3_ttf.dll files are in the same folder as the executable, then run:
@@ -53,19 +54,3 @@ Make sure the SDL3.dll and SDL3_ttf.dll files are in the same folder as the exec
 If you want to contribute, feel free to clone the repository and open a Pull Request on GitHub: GitHub Repository
 
 🚀 All contributions are welcome!
-
-
----
-
-### **Why This Fix Works**
-- **Lists** (`-` or `*`) are properly separated into new lines.
-- **Checkmarks** (`✅`) are placed in **separate list items**.
-- **Markdown Headers (`##`)** are used properly.
-- **Code Blocks (` ```sh `)** are correctly formatted for shell commands.
-
-After modifying, commit and push it back:
-
-git add README.md
-git commit -m "Fixed Markdown formatting for lists and code blocks"
-git push origin main
-Let me know if you need further help! 🚀
