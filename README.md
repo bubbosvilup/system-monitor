@@ -3,6 +3,11 @@ System Monitor is a C++ application built with SDL3 and SDL_ttf to monitor CPU, 
 
 🌈 Recent Changes
 
+06/02/25
+
+✅ Bug fixing
+✅ Implemented Light/Dark feature 
+
 05/02/25
 
 ✅ The Arial.ttf file is now included in the project, so there's no need to download it manually.
